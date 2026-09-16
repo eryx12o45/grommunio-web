@@ -36,7 +36,7 @@ class PluginPasskey extends Plugin
             case 'server.index.load.main.before' : // don't use the logon trigger because we need the settings
                 try {
                     // Check if plugin is enabled and activated
-                    $pluginEnabled = $GLOBALS["settings"]->get('zarafa/v1/plugins/passkey/enable', PLUGIN_PASSKEY_ENABLE);
+                    $pluginEnabled = $GLOBALS["settings"]->get('grommunio/v1/plugins/passkey/enable', PLUGIN_PASSKEY_ENABLE);
                     $passkeyActivated = PasskeyData::isActivated();
 
                     if (!$pluginEnabled || !$passkeyActivated) {
@@ -107,7 +107,7 @@ class PluginPasskey extends Plugin
     function injectPluginSettings(&$data)
     {
         $data['settingsObj']->addSysAdminDefaults(array(
-            'zarafa' => array(
+            'grommunio' => array(
                 'v1' => array(
                     'plugins' => array(
                         'passkey' => array(

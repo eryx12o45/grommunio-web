@@ -1,16 +1,16 @@
-Ext.namespace('Zarafa.plugins.passkey.settings');
+Ext.namespace('Grommunio.plugins.passkey.settings');
 
 /**
- * @class Zarafa.plugins.passkey.settings.GeneralSettingsWidget
- * @extends Zarafa.settings.ui.SettingsWidget
- * @xtype zarafa.plugins.passkey.generalsettingswidget
+ * @class Grommunio.plugins.passkey.settings.GeneralSettingsWidget
+ * @extends Grommunio.settings.ui.SettingsWidget
+ * @xtype passkey.generalsettingswidget
  *
  * General settings widget for the Passkey plugin
  */
-Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settings.ui.SettingsWidget, {
+Grommunio.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Grommunio.settings.ui.SettingsWidget, {
 
 	/**
-	 * @cfg {Zarafa.settings.SettingsContext} settingsContext The settings
+	 * @cfg {Grommunio.settings.SettingsContext} settingsContext The settings
 	 * context which is used to hook into the save/discard lifecycle.
 	 */
 	settingsContext: undefined,
@@ -31,7 +31,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
 				hideLabel: true,
 				value: _('Passkeys provide a secure and convenient way to authenticate without passwords. You can register multiple passkeys and use them to log into your account.'),
 				htmlEncode: false,
-				cls: 'zarafa-settings-widget-info'
+				cls: 'grommunio-settings-widget-info'
 			}, {
 				xtype: 'fieldset',
 				title: _('Browser support'),
@@ -105,7 +105,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
 			}]
 		});
 
-		Zarafa.plugins.passkey.settings.GeneralSettingsWidget.superclass.constructor.call(this, config);
+		Grommunio.plugins.passkey.settings.GeneralSettingsWidget.superclass.constructor.call(this, config);
 	},
 
 	/**
@@ -114,7 +114,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
 	 */
 	initEvents: function()
 	{
-		Zarafa.plugins.passkey.settings.GeneralSettingsWidget.superclass.initEvents.call(this);
+		Grommunio.plugins.passkey.settings.GeneralSettingsWidget.superclass.initEvents.call(this);
 
 		// Load passkeys once the grid is rendered, so we don't fetch data for
 		// a category the user may never open.
@@ -132,9 +132,9 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
 	 */
 	loadActivationStatus: function()
 	{
-		container.getRequest().singleRequest("passkeymodule", "isactivated", {}, new Zarafa.plugins.passkey.data.ResponseHandler({
+		container.getRequest().singleRequest("passkeymodule", "isactivated", {}, new Grommunio.plugins.passkey.data.ResponseHandler({
 			successCallback: (function (response) {
-				Zarafa.plugins.passkey.data.Configuration.gotIsActivated(response);
+				Grommunio.plugins.passkey.data.Configuration.gotIsActivated(response);
 				this.status.setValue(this.getStatus());
 				this.activateButton.setText(this.getActivateButtonText());
 			}).createDelegate(this)
@@ -147,7 +147,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
 	 */
 	getWebAuthnSupportText: function()
 	{
-		var config = Zarafa.plugins.passkey.data.Configuration;
+		var config = Grommunio.plugins.passkey.data.Configuration;
 		if (config.checkWebAuthnSupport()) {
 			return '<span class="passkey-status-supported">' + _('Supported') + '</span>';
 		}
@@ -160,7 +160,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
 	 */
 	onRegisterPasskey: function()
 	{
-		if (!Zarafa.plugins.passkey.data.Configuration.checkWebAuthnSupport()) {
+		if (!Grommunio.plugins.passkey.data.Configuration.checkWebAuthnSupport()) {
 			Ext.Msg.alert(_('WebAuthn not supported'), _('Your browser does not support WebAuthn.'));
 
 			return;
@@ -181,7 +181,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
      */
     registerNewPasskey: function (name) {
         var self = this;
-        var Config = Zarafa.plugins.passkey.data.Configuration;
+        var Config = Grommunio.plugins.passkey.data.Configuration;
         var config = Config.getWebAuthnConfig();
         var userInfo = Config.getUserInfo();
 
@@ -286,7 +286,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
      * @return {String} The localized current activation status.
      */
     getStatus: function () {
-        return (Zarafa.plugins.passkey.data.Configuration.isActivated() ? _("Activated") : _("Deactivated"));
+        return (Grommunio.plugins.passkey.data.Configuration.isActivated() ? _("Activated") : _("Deactivated"));
     },
 
     /**
@@ -294,19 +294,19 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
      * the action the user will perform (activate when off, deactivate when on).
      */
     getActivateButtonText: function () {
-        return (Zarafa.plugins.passkey.data.Configuration.isActivated() ? _("Deactivate") : _("Activate"));
+        return (Grommunio.plugins.passkey.data.Configuration.isActivated() ? _("Deactivate") : _("Activate"));
     },
 
     /**
      * Toggle passkey activation. This is an imperative server operation rather
      * than a stored setting, so - like the passwd plugin's save - it reuses the
-     * {@link Zarafa.settings.ui.SettingsCategory saving mask} of the owning
+     * {@link Grommunio.settings.ui.SettingsCategory saving mask} of the owning
      * category to give the standard "Saving..."/"Saved" feedback.
      */
     onToggleActivation: function () {
         this.ownerCt.displaySavingMask();
 
-        container.getRequest().singleRequest("passkeymodule", "activate", {}, new Zarafa.plugins.passkey.data.ResponseHandler({
+        container.getRequest().singleRequest("passkeymodule", "activate", {}, new Grommunio.plugins.passkey.data.ResponseHandler({
             successCallback: this.onActivationDone.createDelegate(this)
         }));
     },
@@ -317,7 +317,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
      * @param {Object} response Server response carrying the new isActivated flag.
      */
     onActivationDone: function (response) {
-        Zarafa.plugins.passkey.data.Configuration.gotIsActivated(response);
+        Grommunio.plugins.passkey.data.Configuration.gotIsActivated(response);
         this.status.setValue(this.getStatus());
         this.activateButton.setText(this.getActivateButtonText());
         this.ownerCt.hideSavingMask(true);
@@ -409,7 +409,6 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
      */
     sendRequest: function(action, data, callback, scope) {
         let requestData = Ext.apply({
-            zarafa_action: 'passkey',
             passkey_action: action
         }, data || {});
 
@@ -417,7 +416,7 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
             'passkeymodule',
             'passkey',
             requestData,
-            new Zarafa.core.data.AbstractResponseHandler({
+            new Grommunio.core.data.AbstractResponseHandler({
                 doPasskey: function(response) {
                     switch (action) {
                         case 'register':
@@ -482,4 +481,4 @@ Zarafa.plugins.passkey.settings.GeneralSettingsWidget = Ext.extend(Zarafa.settin
     }
 });
 
-Ext.reg('zarafa.plugins.passkey.generalsettingswidget', Zarafa.plugins.passkey.settings.GeneralSettingsWidget);
+Ext.reg('passkey.generalsettingswidget', Grommunio.plugins.passkey.settings.GeneralSettingsWidget);

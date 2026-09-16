@@ -15,7 +15,7 @@ class PasskeyData
         if (!isset($GLOBALS["settings"]) || $GLOBALS["settings"] === null) {
             return false; // Default to not activated when settings unavailable
         }
-        return $GLOBALS["settings"]->get('zarafa/v1/plugins/passkey/activate');
+        return $GLOBALS["settings"]->get('grommunio/v1/plugins/passkey/activate');
     }
 
     /**
@@ -28,7 +28,7 @@ class PasskeyData
         if (!isset($GLOBALS["settings"]) || $GLOBALS["settings"] === null) {
             return; // Cannot save settings when settings object unavailable
         }
-        $GLOBALS["settings"]->set('zarafa/v1/plugins/passkey/activate', $activate);
+        $GLOBALS["settings"]->set('grommunio/v1/plugins/passkey/activate', $activate);
         $GLOBALS["settings"]->saveSettings();
     }
 
@@ -43,7 +43,7 @@ class PasskeyData
         if (class_exists('EncryptionStore')) {
             try {
                 $encryptionStore = EncryptionStore::getInstance();
-                $credentials = $encryptionStore->get('passkeyCredentials', '');
+                $credentials = $encryptionStore->get('passkeyCredentials');
                 if (!empty($credentials)) {
                     return $credentials;
                 }
@@ -54,7 +54,7 @@ class PasskeyData
         
         // Fallback to settings if available
         if (isset($GLOBALS["settings"]) && $GLOBALS["settings"] !== null) {
-            return $GLOBALS["settings"]->get('zarafa/v1/plugins/passkey/credentials', '');
+            return $GLOBALS["settings"]->get('grommunio/v1/plugins/passkey/credentials', '');
         }
         
         return ''; // Return empty string when no storage available
@@ -79,7 +79,7 @@ class PasskeyData
         
         // Also store in settings as backup if available
         if (isset($GLOBALS["settings"]) && $GLOBALS["settings"] !== null) {
-            $GLOBALS["settings"]->set('zarafa/v1/plugins/passkey/credentials', $credentials);
+            $GLOBALS["settings"]->set('grommunio/v1/plugins/passkey/credentials', $credentials);
             $GLOBALS["settings"]->saveSettings();
         }
     }
@@ -179,11 +179,11 @@ class PasskeyData
         }
 
         return [
-            'rp_id' => (string) $GLOBALS["settings"]->get('zarafa/v1/plugins/passkey/rp_id', ''),
-            'rp_name' => $GLOBALS["settings"]->get('zarafa/v1/plugins/passkey/rp_name', 'Grommunio'),
-            'timeout' => $GLOBALS["settings"]->get('zarafa/v1/plugins/passkey/timeout', 60000),
-            'user_verification' => $GLOBALS["settings"]->get('zarafa/v1/plugins/passkey/user_verification', 'preferred'),
-            'authenticator_attachment' => $GLOBALS["settings"]->get('zarafa/v1/plugins/passkey/authenticator_attachment', null)
+            'rp_id' => (string) $GLOBALS["settings"]->get('grommunio/v1/plugins/passkey/rp_id', ''),
+            'rp_name' => $GLOBALS["settings"]->get('grommunio/v1/plugins/passkey/rp_name', 'Grommunio'),
+            'timeout' => $GLOBALS["settings"]->get('grommunio/v1/plugins/passkey/timeout', 60000),
+            'user_verification' => $GLOBALS["settings"]->get('grommunio/v1/plugins/passkey/user_verification', 'preferred'),
+            'authenticator_attachment' => $GLOBALS["settings"]->get('grommunio/v1/plugins/passkey/authenticator_attachment', null)
         ];
     }
 }

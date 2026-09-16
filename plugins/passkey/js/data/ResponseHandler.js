@@ -1,12 +1,12 @@
-Ext.namespace('Zarafa.plugins.passkey.data');
+Ext.namespace('Grommunio.plugins.passkey.data');
 
 /**
- * @class Zarafa.plugins.passkey.data.ResponseHandler
- * @extends Zarafa.core.data.AbstractResponseHandler
- * 
+ * @class Grommunio.plugins.passkey.data.ResponseHandler
+ * @extends Grommunio.core.data.AbstractResponseHandler
+ *
  * Response handler for Passkey plugin server communication
  */
-Zarafa.plugins.passkey.data.ResponseHandler = Ext.extend(Zarafa.core.data.AbstractResponseHandler, {
+Grommunio.plugins.passkey.data.ResponseHandler = Ext.extend(Grommunio.core.data.AbstractResponseHandler, {
 
     /**
      * @cfg {Function} successCallback The function which

@@ -1,13 +1,13 @@
-Ext.namespace('Zarafa.plugins.passkey');
+Ext.namespace('Grommunio.plugins.passkey');
 
 /**
- * @class Zarafa.plugins.passkey.PasskeyPlugin
- * @extends Zarafa.core.Plugin
+ * @class Grommunio.plugins.passkey.PasskeyPlugin
+ * @extends Grommunio.core.Plugin
  *
  * This class integrates the Passkey plugin into grommunio Web.
  * It allows users to set up and manage their Passkeys for their account.
  */
-Zarafa.plugins.passkey.PasskeyPlugin = Ext.extend(Zarafa.core.Plugin, {
+Grommunio.plugins.passkey.PasskeyPlugin = Ext.extend(Grommunio.core.Plugin, {
 
     /**
      * @constructor
@@ -16,7 +16,7 @@ Zarafa.plugins.passkey.PasskeyPlugin = Ext.extend(Zarafa.core.Plugin, {
     constructor: function (config) {
         config = config || {};
 
-        Zarafa.plugins.passkey.PasskeyPlugin.superclass.constructor.call(this, config);
+        Grommunio.plugins.passkey.PasskeyPlugin.superclass.constructor.call(this, config);
     },
 
     /**
@@ -24,9 +24,9 @@ Zarafa.plugins.passkey.PasskeyPlugin = Ext.extend(Zarafa.core.Plugin, {
      * and shared components.
      */
     initPlugin: function () {
-        Zarafa.plugins.passkey.PasskeyPlugin.superclass.initPlugin.apply(this, arguments);
+        Grommunio.plugins.passkey.PasskeyPlugin.superclass.initPlugin.apply(this, arguments);
 
-        Zarafa.plugins.passkey.data.Configuration.init();
+        Grommunio.plugins.passkey.data.Configuration.init();
 
         this.registerInsertionPoint("context.settings.categories", this.createSettingCategories, this);
     },
@@ -34,12 +34,12 @@ Zarafa.plugins.passkey.PasskeyPlugin = Ext.extend(Zarafa.core.Plugin, {
     /**
      * Create category in settings
      * @param {String} insertionName The name of the insertion point
-     * @param {Zarafa.settings.ui.SettingsMainPanel} settingsMainPanel The panel to which the category is added
-     * @param {Zarafa.settings.SettingsContext} settingsContext The settings context
+     * @param {Grommunio.settings.ui.SettingsMainPanel} settingsMainPanel The panel to which the category is added
+     * @param {Grommunio.settings.SettingsContext} settingsContext The settings context
      */
     createSettingCategories: function (insertionName, settingsMainPanel, settingsContext) {
         return {
-            xtype: "zarafa.plugins.passkey.category",
+            xtype: "passkey.category",
             settingsContext: settingsContext
         };
     }
@@ -49,11 +49,11 @@ Zarafa.plugins.passkey.PasskeyPlugin = Ext.extend(Zarafa.core.Plugin, {
  * This code gets executed after grommunio Web has loaded.
  * It hooks the plugin to grommunio Web.
  */
-Zarafa.onReady(function () {
-    container.registerPlugin(new Zarafa.core.PluginMetaData({
+Grommunio.onReady(function () {
+    container.registerPlugin(new Grommunio.core.PluginMetaData({
         name: 'passkey',
         displayName: _('Passkey Plugin'),
         allowUserDisable: true,
-        pluginConstructor: Zarafa.plugins.passkey.PasskeyPlugin
+        pluginConstructor: Grommunio.plugins.passkey.PasskeyPlugin
     }));
 });

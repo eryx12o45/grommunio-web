@@ -1,12 +1,12 @@
-Ext.namespace('Zarafa.plugins.passkey.data');
+Ext.namespace('Grommunio.plugins.passkey.data');
 
 /**
- * @class Zarafa.plugins.passkey.data.Configuration
+ * @class Grommunio.plugins.passkey.data.Configuration
  * @extends Object
- * 
+ *
  * Configuration class for the Passkey plugin
  */
-Zarafa.plugins.passkey.data.Configuration = {
+Grommunio.plugins.passkey.data.Configuration = {
 
     activate: undefined,
     /**
@@ -15,7 +15,7 @@ Zarafa.plugins.passkey.data.Configuration = {
     init: function() {
         // Plugin configuration initialization
         this.webauthnSupported = this.checkWebAuthnSupport();
-        let a = new Zarafa.plugins.passkey.data.ResponseHandler({
+        let a = new Grommunio.plugins.passkey.data.ResponseHandler({
             successCallback: this.gotIsActivated.createDelegate(this)
         });
         container.getRequest().singleRequest("passkeymodule", "isactivated", {}, a);
@@ -44,11 +44,11 @@ Zarafa.plugins.passkey.data.Configuration = {
     getWebAuthnConfig: function() {
         let settingsModel = container.getSettingsModel();
         return {
-            rpId: settingsModel.get('zarafa/v1/plugins/passkey/rp_id') || window.location.hostname,
-            rpName: settingsModel.get('zarafa/v1/plugins/passkey/rp_name') || 'Grommunio',
-            timeout: settingsModel.get('zarafa/v1/plugins/passkey/timeout') || 60000,
-            userVerification: settingsModel.get('zarafa/v1/plugins/passkey/user_verification') || 'preferred',
-            authenticatorAttachment: settingsModel.get('zarafa/v1/plugins/passkey/authenticator_attachment') || null
+            rpId: settingsModel.get('grommunio/v1/plugins/passkey/rp_id') || window.location.hostname,
+            rpName: settingsModel.get('grommunio/v1/plugins/passkey/rp_name') || 'Grommunio',
+            timeout: settingsModel.get('grommunio/v1/plugins/passkey/timeout') || 60000,
+            userVerification: settingsModel.get('grommunio/v1/plugins/passkey/user_verification') || 'preferred',
+            authenticatorAttachment: settingsModel.get('grommunio/v1/plugins/passkey/authenticator_attachment') || null
         };
     },
 
@@ -103,7 +103,7 @@ Zarafa.plugins.passkey.data.Configuration = {
      */
     isPasskeyEnabled: function() {
         let settingsModel = container.getSettingsModel();
-        return settingsModel.get('zarafa/v1/plugins/passkey/enable') === true;
+        return settingsModel.get('grommunio/v1/plugins/passkey/enable') === true;
     },
 
     /**
@@ -112,6 +112,6 @@ Zarafa.plugins.passkey.data.Configuration = {
      */
     isPasskeyActivated: function() {
         let settingsModel = container.getSettingsModel();
-        return settingsModel.get('zarafa/v1/plugins/passkey/activate') === true;
+        return settingsModel.get('grommunio/v1/plugins/passkey/activate') === true;
     }
 };
